@@ -1,0 +1,27 @@
+The initialization shell script init-multiple-databases.sh can be found on Github here - you will need to copy 
+and paste it in your own repository
+
+The full path of the shell script is as follows - docker/postgres/init-multiple-databases.sh
+
+You will need to create the docker folder in the root of the repository and from there create the 
+associated postgres sub-folder and finally the initialization shell script, which we get from step 1
+
+[This Note is ONLY for macOS/ Linux, if you are on Windows SKIP this step] - 
+For macOS/ Linux users ONLY, there could be a potential problem when running the initialization shell script 
+inside the docker-compose.yaml. The issue being that the shell script might not be executable which causes the 
+postgres/ airflow-init containers to not spin up. To counter this issue, go to the command line, 
+make sure you are in the root directory and simply run the below command;
+
+chmod +x ./docker/postgres/init-multiple-databases.sh
+
+
+
+** Docker commands **
+$ docker login -u ogull   
+$ docker build -t ogull/yt_api_elt:1.0.0 .
+$ docker push ogull/yt_api_elt:1.0.0
+
+$ docker compose up -d    
+$ docker ps
+$ docker compose down
+
