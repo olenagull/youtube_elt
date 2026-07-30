@@ -50,6 +50,11 @@ with DAG(
     extract_data = extract_video_data(video_ids)
     save_to_json = save_to_json(extract_data)
 
+    trigger_update_db = TriggerDagRunOperator(
+        task_id="trigger_update_db",
+        trigger_dag_id="update_db",
+    )
+
     # Define dependancies
     playlist_id >> video_ids >> extract_data >> save_to_json
 
@@ -58,14 +63,18 @@ with DAG(
     dag_id='update_db',
     default_args=default_args,
     description='DAG to process JSON file and insert data into staging and core schemas',
-    schedule='0 15 * * *',
     catchup=False,
-    # schedule=None,
+    schedule=None,
 ) as dag_update:
 
     # Define tasks
     update_staging = staging_table()
     update_core = core_table()
+
+    trigger_data_quality = TriggerDagRunOperator(
+        task_id="trigger_data_quality",
+        trigger_dag_id="data_quality",
+    )
 
     # Define dependancies
     update_staging >> update_core 
@@ -76,7 +85,7 @@ with DAG(
     default_args=default_args,
     description="DAG to check the data quality on both layers in the database",
     catchup=False,
-    schedule='0 16 * * *',
+    schedule=None,
 ) as dag_quality:
 
     # Define tasks
