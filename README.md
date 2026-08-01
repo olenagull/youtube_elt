@@ -1,12 +1,5 @@
 # **Youtube API - ELT**
 
-## **Architecture** 
-
-<p align="center">
-  <img width="500" height="400" src="images/project_architecture.png">
-</p>
-
-
 ## **Dataset** 
 
 As a data source, the Youtube API is used. The data of this project is pulled from a popular channel - 'MrBeast'.
